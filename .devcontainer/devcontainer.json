@@ -1,7 +1,8 @@
 {
-    "name": "Phoenix + Postgres",
+    "name": "Elixir:1.10-alpine",
     "dockerComposeFile": "docker-compose.yml",
     "service": "web",
+    "workspaceFolder": "/app",
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
     },
