@@ -1,0 +1,36 @@
+version: "3.5"
+
+services:
+  db:
+    image: "postgres:11-alpine"
+    container_name: "db"
+    volumes:
+      - "../db/:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres"
+      - "PGUSER=postgres"
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    image: "elixir:1.10-alpine"
+    volumes:
+      - "../:/app"
+      - "mix_cache:/mix"
+    working_dir: "/app"
+    links:
+      - "db"
+    environment:
+      - "MIX_HOME=/mix"
+    ports:
+      - "4000:4000"
+    command: "sleep infinity"
+
+volumes:
+  mix_cache:
